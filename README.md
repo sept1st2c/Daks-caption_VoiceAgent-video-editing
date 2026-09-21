@@ -9,10 +9,29 @@ or angry, and draws them that way. Then you fix whatever you don't like by talki
 
 Built for the AWS First Commit hackathon, Ship It track.
 
-**Try it:** [the editor](https://4ofryng45bbr7en765off7otja0yuamo.lambda-url.ap-south-1.on.aws)
-· [API health](https://pra22j2hgp.ap-south-1.awsapprunner.com/health) · region `ap-south-1`.
-There is no login yet, so please be kind to it. Chrome or Edge; the microphone needs HTTPS, which
-the address above has.
+## Try it live
+
+**[Open the demo project](https://4ofryng45bbr7en765off7otja0yuamo.lambda-url.ap-south-1.on.aws/editor?id=6f2ea8bfd891)**
+is a 23-second reel that is already captioned. Nothing to install, nothing to upload, no login.
+
+Once it is open, a few things worth doing:
+
+1. Press play and watch the captions. The shouted and stretched words are drawn differently on purpose.
+2. Click a word in the transcript on the left and change its style. Ctrl+Z undoes it.
+3. Type in the bar at the bottom, *"make the captions bigger"*, or click the mic and say it.
+4. Drag across empty space on the **Preset** row of the timeline to mark a stretch of the video, then pick
+   a look in the **Presets** tab. It changes only that stretch.
+5. Press **Export**. It takes about three minutes, then you can download the MP4 with the captions burned in.
+
+Want to use your own video? [Start a new project](https://4ofryng45bbr7en765off7otja0yuamo.lambda-url.ap-south-1.on.aws/editor)
+and drop in a reel of up to 90 seconds and 200 MB. A short reel is captioned in under a minute.
+
+Use Chrome or Edge; the microphone needs HTTPS, which these addresses have. The same editor is also
+on a [second address](https://master.dnb761en5gcll.amplifyapp.com), and the
+[API health check](https://pra22j2hgp.ap-south-1.awsapprunner.com/health) should say `{"ok":true}`.
+Everything runs in `ap-south-1` (Mumbai).
+
+One caveat: there is no login yet, so please be kind to it.
 
 ## What it does
 
@@ -26,7 +45,8 @@ shaking. Seven presets set the base look (`rangmanch`, `chamak`, `nazm`, `dhamak
 **Editing by talking.** Type in the bar, or click the mic and say *"make that line angry"*, *"the
 word bahut in blue"*, *"minimal preset from two to four seconds"*. The agent can also look at the
 video, so *"put the captions where my hand is"* and stickers that sit on a face both work. Every
-agent turn is one undo.
+agent turn is one undo. And when typing is quicker than explaining, you can fix a word's text or
+its timing by hand in the inspector.
 
 **Your own media on top.** Two tracks of images and clips over the video: move, scale, rotate,
 trim, split, delete. The main video is never cut or re-timed. That is a deliberate line, not a
@@ -68,8 +88,12 @@ nvm use && npm install
 cd apps/web && npm run dev
 ```
 
-Open <http://localhost:5173/editor?demo=1>. It loads a bundled 28-second project with real video
-and captions, so you can try everything without uploading or running the pipeline.
+Open <http://localhost:5173/editor?demo=1> for a 28-second demo project with 51 captioned words, so
+you can poke at the editor without uploading anything. Two things it needs: `VITE_USE_FIXTURE=true`
+in `.env` (the example file sets it), and the demo clip itself. The clip is not in the repo. Drop a
+file named `Normal.mp4` into `services/api/scripts/stt_bakeoff/clips/` (git-ignored; ask a
+teammate for it), or the captions load over a blank player. Without the clip, upload your own reel
+at `/editor` instead.
 
 Export is opt-in, because its image carries a headless Chrome and takes a few minutes to build the
 first time: `docker compose --profile export up -d --build`.
